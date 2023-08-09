@@ -1,12 +1,13 @@
 import Post from "../../models/Post.js";
+import User from "../../models/User.js";
 import { asyncError } from "../../utils/errors/asyncError.js";
 
 // Fetches latest posts based on createdAt
 
-const getAllSavedPosts = asyncError(async (req, res, next) => {
+const fetchMyPosts = asyncError(async (req, res, next) => {
     const user = req.user;
-    const likedPosts = await Post.find({_id : {$in : user.savedPosts}}).populate("user"); // Fetch top 10 trending posts
-    if (!likedPosts) {
+    const posts = await Post.find({ user: user._id }).populate("user");
+    if (!posts) {
         return res.status(200).json({
             msg: "POSTS_FETCHED_SUCCESFULLY",
             posts: []
@@ -15,8 +16,8 @@ const getAllSavedPosts = asyncError(async (req, res, next) => {
 
     return res.status(200).json({
         msg: "POSTS_FETCHED_SUCCESFULLY",
-        posts : likedPosts
+        posts
     });
 });
 
-export default getAllSavedPosts;
+export default fetchMyPosts;

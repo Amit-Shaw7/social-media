@@ -17,6 +17,7 @@ const login = asyncError(async (req, res, next) => {
     if (!verified) {
         return next(new ErrorHandler("INVALID_EMAIL_OR_PASSWORD", 400));
     }
+
     const {password:pass , ...rest} = user._doc;
     const token = await generateToken(user?._id);
     setCookie(res, token);
@@ -24,7 +25,7 @@ const login = asyncError(async (req, res, next) => {
         msg: "LOGGED_IN_SUCCESFULLY",
         user : rest,
         token
-    })
+    });
 });
 
 export default login;

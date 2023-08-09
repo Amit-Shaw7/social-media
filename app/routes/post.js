@@ -18,6 +18,9 @@ import dislikePost from "../controllers/posts/dislikePost.js";
 import savePost from "../controllers/posts/savePost.js";
 import validateSavePost from "../controllers/posts/validators/validateSavePost.js";
 import deletePost from "../controllers/posts/deletePost.js";
+import getAllLikedPosts from "../controllers/posts/getAllLikedPosts.js";
+import getAllSavedPosts from "../controllers/posts/getAllSavedPosts.js";
+import fetchMyPosts from "../controllers/posts/fetchMyPosts.js";
 const PostRouter = express.Router();
 
 
@@ -42,6 +45,12 @@ PostRouter.get("/feed/latest",
     checkUserPresent,
     getPostsForFeedLatest
 );
+PostRouter.get("/myposts",
+    isLoggedIn,
+    checkUserPresent,
+    fetchMyPosts
+);
+
 PostRouter.get("/feed/oldest",
     isLoggedIn,
     checkUserPresent,
@@ -87,6 +96,16 @@ PostRouter.delete("/:postId",
     checkUserPresent,
     verifyUserForPost,
     deletePost
+);
+
+PostRouter.get("/likedposts",
+    isLoggedIn,
+    getAllLikedPosts
+);
+
+PostRouter.get("/savedposts",
+    isLoggedIn,
+    getAllSavedPosts
 );
 
 

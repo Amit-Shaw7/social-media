@@ -1,7 +1,6 @@
 import { check } from "express-validator";
 import validateResult from "../../../middleware/validation/validateResult.js";
 
-
 /**
  * Validates register request
  */

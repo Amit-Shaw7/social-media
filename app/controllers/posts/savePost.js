@@ -14,6 +14,7 @@ const savePost = asyncError(async (req, res, next) => {
 
     if (post.savedBy.includes(user._id)) {
         post.savedBy = post.savedBy.filter(id => !id.equals(user._id));
+        user.savedPosts = user.savedPosts.filter(id => !id.equals(post._id));
         saved = false;
     } else {
         post.savedBy.push(user._id);
