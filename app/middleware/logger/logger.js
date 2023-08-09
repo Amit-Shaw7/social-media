@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { v4 as uuid } from "uuid";
 import fs from 'fs';
 import path from "path";
-import { __dirname } from "../../globals.js";
+import { __dirname } from "../../../globals.js";
 const fsPromise = fs.promises;
 
 

@@ -3,44 +3,45 @@ dotenv.config();
 
 import path from 'path';
 import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { __dirname } from './globals.js';
 import { connectToMongo } from './mongo.js';
 import AuthRouter from './app/routes/auth.js';
-import { logger } from './app/middleware/logger.js';
-import { errorHandler } from './app/middleware/errorHandler.js';
-import cookieParser from 'cookie-parser';
+import { logger } from './app/middleware/logger/logger.js';
 import { corsOptions } from './config/corsOptions.js';
+import { createError } from './app/middleware/error/createError.js';
+import { error404 } from './app/middleware/error/error404.js';
+import UserRouter from './app/routes/user.js';
+import PostRouter from './app/routes/post.js';
 
 
 const app = express();
 await connectToMongo();
-// app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
 app.use(logger);
 app.use(cookieParser());
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname , "views" , "welcome.html"));
+    res.sendFile(path.join(__dirname, "views", "welcome.html"));
 });
 
 
-app.use('/auth' , AuthRouter);
+app.use('/api/auth', AuthRouter);
+app.use('/api/user', UserRouter);
+app.use('/api/post', PostRouter);
 
 
 /*
  * Handle 404 error
  */
-app.all('*' , (req , res , next) => {
-    if(req.accepts('html')){
-        res.sendFile(path.join(__dirname , "views" , "404.html"));
-    }else if(req.accepts('json')){
-        res.json({msg : '404 Not Found'})
-    }else{
-        res.type('txt').send('404 Not Found')
-    }
+app.all('*', (req, res, next) => {
+    error404(req, res);
 });
 
-app.use(errorHandler);
+app.use(createError);
 
 
 app.listen(process.env.PORT, (error) => {
