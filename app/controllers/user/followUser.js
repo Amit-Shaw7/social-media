@@ -4,18 +4,18 @@ import ErrorHandler from "../../utils/errors/errorHandler.js";
 
 const followUser = asyncError(async (req, res, next) => {
     const user = req.user;
-    const userToFollowId = req.params.userId;
+    const followUserId = req.params.userId;
 
-    const userToFollow = await User.findById(userToFollowId);
-    if (!userToFollow) {
+    const userToBeFollowed = await User.findById(followUserId);
+    if (!userToBeFollowed) {
         return next(new ErrorHandler("USER_NOT_FOUND", 404));
     }
 
-    userToFollow.followers.push(user._id);
-    user.followings.push(userToFollow._id);
+    userToBeFollowed.followers.push(user._id);
+    user.followings.push(userToBeFollowed._id);
 
     await user.save();
-    await userToFollow.save();
+    await userToBeFollowed.save();
 
     return res.status(200).json({
         msg: "USER_FOLLOWED_SUCCESFULLY",

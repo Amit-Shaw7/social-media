@@ -6,12 +6,6 @@ import validateUpdatePost from "../controllers/posts/validators/validateUpdatePo
 import checkUserPresent from "../middleware/authorization/checkUserPresent.js";
 import verifyUserForPost from "../middleware/authorization/verifyUserForPost.js";
 import updatePost from "../controllers/posts/updatePost.js";
-import getPostsForExploreTrending from "../controllers/posts/getPostsForExploreTrending.js";
-import getPostsForExploreOldest from "../controllers/posts/getPostsForExploreOldest.js";
-import getPostsForExploreLatest from "../controllers/posts/getPostsForExploreLatest.js";
-import getPostsForFeedTrending from "../controllers/posts/getPostsForFeedTrending.js";
-import getPostsForFeedLatest from "../controllers/posts/getPostssForFeedLatest.js";
-import getPostsForFeedOldest from "../controllers/posts/getPostsForFeedOldest.js";
 import validateLikeDislikePost from "../controllers/posts/validators/validateLikeDislikePost.js";
 import likePost from "../controllers/posts/likePost.js";
 import dislikePost from "../controllers/posts/dislikePost.js";
@@ -20,47 +14,44 @@ import validateSavePost from "../controllers/posts/validators/validateSavePost.j
 import deletePost from "../controllers/posts/deletePost.js";
 import getAllLikedPosts from "../controllers/posts/getAllLikedPosts.js";
 import getAllSavedPosts from "../controllers/posts/getAllSavedPosts.js";
-import fetchMyPosts from "../controllers/posts/fetchMyPosts.js";
+import getPostsForFeed from "../controllers/posts/getPostsForFeed.js";
+import getPostsForExplore from "../controllers/posts/getPostsForExplore.js";
+
 const PostRouter = express.Router();
 
 
-PostRouter.get("/explore/trending",
-    getPostsForExploreTrending
+PostRouter.get("/explore",
+    getPostsForExplore
 );
-PostRouter.get("/explore/oldest",
-    getPostsForExploreOldest
-);
-PostRouter.get("/explore/latest",
-    getPostsForExploreLatest
-);
+
 
 // requires authentications
-PostRouter.get("/feed/trending",
+PostRouter.get("/feed",
     isLoggedIn,
     checkUserPresent,
-    getPostsForFeedTrending
-);
-PostRouter.get("/feed/latest",
-    isLoggedIn,
-    checkUserPresent,
-    getPostsForFeedLatest
-);
-PostRouter.get("/myposts",
-    isLoggedIn,
-    checkUserPresent,
-    fetchMyPosts
-);
-
-PostRouter.get("/feed/oldest",
-    isLoggedIn,
-    checkUserPresent,
-    getPostsForFeedOldest
+    getPostsForFeed
 );
 
 PostRouter.post("/",
     validateCreatePost,
     isLoggedIn,
     createPost
+);
+
+PostRouter.patch("/:postId",
+    validateUpdatePost,
+    isLoggedIn,
+    checkUserPresent,
+    verifyUserForPost,
+    updatePost
+);
+
+PostRouter.delete("/:postId",
+    validateUpdatePost,
+    isLoggedIn,
+    checkUserPresent,
+    verifyUserForPost,
+    deletePost
 );
 
 
@@ -82,21 +73,6 @@ PostRouter.patch("/save/:postId",
     savePost
 );
 
-
-PostRouter.patch("/:postId",
-    validateUpdatePost,
-    isLoggedIn,
-    checkUserPresent,
-    verifyUserForPost,
-    updatePost
-);
-PostRouter.delete("/:postId",
-    validateUpdatePost,
-    isLoggedIn,
-    checkUserPresent,
-    verifyUserForPost,
-    deletePost
-);
 
 PostRouter.get("/likedposts",
     isLoggedIn,

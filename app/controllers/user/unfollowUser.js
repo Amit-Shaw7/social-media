@@ -4,18 +4,18 @@ import ErrorHandler from "../../utils/errors/errorHandler.js";
 
 const unfollowUser = asyncError(async (req, res, next) => {
     const user = req.user;
-    const followedUserId = req.params.userId;
+    const unfollowUserId = req.params.userId;
 
-    const followedUser = await User.findById(followedUserId);
-    if (!followedUser) {
+    const userToBeUnfollowed = await User.findById(unfollowUserId);
+    if (!userToBeUnfollowed) {
         return next(new ErrorHandler("USER_NOT_FOUND", 404));
     }
 
-    followedUser.followers = followedUser.followers.filter(id => !id.equals(user._id));
-    user.followings = user.followings.filter(id => !id.equals(followedUser?._id));
+    userToBeUnfollowed.followers = userToBeUnfollowed.followers.filter(id => !id.equals(user._id));
+    user.followings = user.followings.filter(id => !id.equals(userToBeUnfollowed?._id));
 
     await user.save();
-    await followedUser.save();
+    await userToBeUnfollowed.save();
 
     return res.status(200).json({
         msg: "USER_UNFOLLOWED_SUCCESFULLY",

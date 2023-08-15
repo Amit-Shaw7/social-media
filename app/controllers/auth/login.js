@@ -18,12 +18,12 @@ const login = asyncError(async (req, res, next) => {
         return next(new ErrorHandler("INVALID_EMAIL_OR_PASSWORD", 400));
     }
 
-    const {password:pass , ...rest} = user._doc;
     const token = await generateToken(user?._id);
+    const { password: pass, ...rest } = user._doc;
     setCookie(res, token);
     return res.status(200).json({
         msg: "LOGGED_IN_SUCCESFULLY",
-        user : rest,
+        user: rest,
         token
     });
 });

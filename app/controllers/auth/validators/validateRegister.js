@@ -32,11 +32,7 @@ const validateRegister = [
         .withMessage('INCORRECT PHONE')
         .trim(),
     check('role')
-        .exists()
-        .withMessage('MISSING')
-        .not()
-        .isEmpty()
-        .withMessage('IS_EMPTY')
+        .optional()
         .trim(),
     check('username')
         .exists()

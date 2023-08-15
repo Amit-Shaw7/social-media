@@ -1,6 +1,5 @@
 import express from "express";
-import getUserProfile from '../controllers/user/getsUerProfile.js';
-import { isLoggedIn } from '../middleware/authorization/isLoggedIn.js';
+import { isLoggedIn } from "../middleware/authorization/isLoggedIn.js";
 import validateUpdateProfile from "../controllers/user/validators/validateUpdateProfile.js";
 import updateProfile from "../controllers/user/updateProfile.js";
 import checkUserPresent from "../middleware/authorization/checkUserPresent.js";
@@ -8,27 +7,53 @@ import validateFollowUnfollowUser from "../controllers/user/validators/validateF
 import followUser from "../controllers/user/followUser.js";
 import unfollowUser from "../controllers/user/unfollowUser.js";
 import searchUser from "../controllers/user/searchUser.js";
+import getFollowers from "../controllers/user/getFollowers.js";
+import getFollowings from "../controllers/user/getFollowings.js";
+import findSuggestedUsers from "../controllers/user/findSuggestedUsers.js";
+import validateGetUser from "../controllers/user/validators/validateGetUser.js";
+import getUser from "../controllers/user/getUser.js";
+import validateGetFollowersFollowings from "../controllers/user/validators/validateGetFollowersFollowing.js";
+import verifyUserForProfile from "../middleware/authorization/verifyUserForProfile.js";
 
 const UserRouter = express.Router();
 
 
-UserRouter.get("/search",
-    searchUser
-);
-
 // Authentication required 
 
-UserRouter.get("/profile",
+UserRouter.get("/:id",
+    validateGetUser,
     isLoggedIn,
     checkUserPresent,
-    getUserProfile
+    getUser
 );
 
-UserRouter.patch("/profile",
+UserRouter.patch("/:id",
     validateUpdateProfile,
     isLoggedIn,
     checkUserPresent,
+    verifyUserForProfile,
     updateProfile
+);
+
+UserRouter.get("/search",
+    isLoggedIn,
+    checkUserPresent,
+    searchUser
+);
+
+
+UserRouter.get("/followers/:id",
+    validateGetFollowersFollowings,
+    isLoggedIn,
+    checkUserPresent,
+    getFollowers
+);
+
+UserRouter.get("/followings/:id",
+    validateGetFollowersFollowings,
+    isLoggedIn,
+    checkUserPresent,
+    getFollowings
 );
 
 UserRouter.patch("/follow/:userId",
@@ -44,5 +69,13 @@ UserRouter.patch("/unfollow/:userId",
     checkUserPresent,
     unfollowUser
 );
+
+UserRouter.get("/suggesteduser",
+    isLoggedIn,
+    checkUserPresent,
+    findSuggestedUsers
+);
+
+
 
 export default UserRouter;
