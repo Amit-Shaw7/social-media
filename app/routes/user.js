@@ -19,6 +19,17 @@ const UserRouter = express.Router();
 
 
 // Authentication required 
+UserRouter.get("/search",
+    isLoggedIn,
+    checkUserPresent,
+    searchUser
+);
+
+UserRouter.get("/suggesteduser",
+    isLoggedIn,
+    checkUserPresent,
+    findSuggestedUsers
+);
 
 UserRouter.get("/:id",
     validateGetUser,
@@ -35,13 +46,6 @@ UserRouter.patch("/:id",
     updateProfile
 );
 
-UserRouter.get("/search",
-    isLoggedIn,
-    checkUserPresent,
-    searchUser
-);
-
-
 UserRouter.get("/followers/:id",
     validateGetFollowersFollowings,
     isLoggedIn,
@@ -56,26 +60,18 @@ UserRouter.get("/followings/:id",
     getFollowings
 );
 
-UserRouter.patch("/follow/:userId",
+UserRouter.patch("/follow/:id",
     validateFollowUnfollowUser,
     isLoggedIn,
     checkUserPresent,
     followUser
 );
 
-UserRouter.patch("/unfollow/:userId",
+UserRouter.patch("/unfollow/:id",
     validateFollowUnfollowUser,
     isLoggedIn,
     checkUserPresent,
     unfollowUser
 );
-
-UserRouter.get("/suggesteduser",
-    isLoggedIn,
-    checkUserPresent,
-    findSuggestedUsers
-);
-
-
 
 export default UserRouter;

@@ -4,14 +4,14 @@ import ErrorHandler from "../../utils/errors/errorHandler.js";
 
 const getFollowings = asyncError(async (req, res, next) => {
     const userId = req.params.id;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate("followings");
     if(!user){
         return next(new ErrorHandler("USER_NOT_FOUND" , 404));
     }
 
     return res.status(200).json({
         msg: "FOLLOWINGS_FETCHED_SUCCESFULLY",
-        followers : user.followings
+        followings : user.followings
     });
 });
 

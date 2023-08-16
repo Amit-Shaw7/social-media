@@ -6,7 +6,7 @@ const verifyUserForProfile = asyncError(async (req, res, next) => {
     const user = req.user;
     const userId = req.params.id;
     
-    if(userId !== user._id){
+    if(!user._id.equals(userId)){
         return next(new ErrorHandler("NOT_PERMITTED" , 404));
     }
     

@@ -4,7 +4,7 @@ import ErrorHandler from "../../utils/errors/errorHandler.js";
 
 const unfollowUser = asyncError(async (req, res, next) => {
     const user = req.user;
-    const unfollowUserId = req.params.userId;
+    const unfollowUserId = req.params.id;
 
     const userToBeUnfollowed = await User.findById(unfollowUserId);
     if (!userToBeUnfollowed) {

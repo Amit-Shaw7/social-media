@@ -10,7 +10,7 @@ const getUser = asyncError(async (req, res, next) => {
     }
 
     return res.status(200).json({
-        msg: "FOLLOWERS_FETCHED_SUCCESFULLY",
+        msg: "USER_FETCHED_SUCCESFULLY",
         user
     });
 });

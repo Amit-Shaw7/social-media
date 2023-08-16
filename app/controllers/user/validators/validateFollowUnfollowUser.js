@@ -7,7 +7,7 @@ import validateResult from "../../../middleware/validation/validateResult.js";
  */
 
 const validateFollowUnfollowUser = [
-    check('userId') // user to be followed
+    check('id') // user to be followed
         .exists()
         .withMessage('MISSING')
         .not()

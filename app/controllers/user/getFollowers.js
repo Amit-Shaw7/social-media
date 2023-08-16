@@ -4,7 +4,7 @@ import ErrorHandler from "../../utils/errors/errorHandler.js";
 
 const getFollowers = asyncError(async (req, res, next) => {
     const userId = req.params.id;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate("followers");
     if(!user){
         return next(new ErrorHandler("USER_NOT_FOUND" , 404));
     }

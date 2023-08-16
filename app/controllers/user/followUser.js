@@ -4,7 +4,7 @@ import ErrorHandler from "../../utils/errors/errorHandler.js";
 
 const followUser = asyncError(async (req, res, next) => {
     const user = req.user;
-    const followUserId = req.params.userId;
+    const followUserId = req.params.id;
 
     const userToBeFollowed = await User.findById(followUserId);
     if (!userToBeFollowed) {
