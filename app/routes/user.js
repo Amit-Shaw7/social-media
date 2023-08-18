@@ -14,6 +14,7 @@ import validateGetUser from "../controllers/user/validators/validateGetUser.js";
 import getUser from "../controllers/user/getUser.js";
 import validateGetFollowersFollowings from "../controllers/user/validators/validateGetFollowersFollowing.js";
 import verifyUserForProfile from "../middleware/authorization/verifyUserForProfile.js";
+import getProfile from "../controllers/user/getProfile.js";
 
 const UserRouter = express.Router();
 
@@ -23,6 +24,12 @@ UserRouter.get("/search",
     isLoggedIn,
     checkUserPresent,
     searchUser
+);
+
+UserRouter.get("/profile",
+    isLoggedIn,
+    checkUserPresent,
+    getProfile
 );
 
 UserRouter.get("/suggesteduser",

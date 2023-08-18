@@ -16,6 +16,8 @@ import getAllLikedPosts from "../controllers/posts/getAllLikedPosts.js";
 import getAllSavedPosts from "../controllers/posts/getAllSavedPosts.js";
 import getPostsForFeed from "../controllers/posts/getPostsForFeed.js";
 import getPostsForExplore from "../controllers/posts/getPostsForExplore.js";
+import validateGetUserPost from "../controllers/posts/validators/validateGetUserPosts.js";
+import getUserPosts from "../controllers/posts/getUserPosts.js";
 
 const PostRouter = express.Router();
 
@@ -82,6 +84,12 @@ PostRouter.get("/likedposts",
 PostRouter.get("/savedposts",
     isLoggedIn,
     getAllSavedPosts
+);
+
+PostRouter.get("/all/:id",  // userId
+    isLoggedIn,
+    validateGetUserPost,
+    getUserPosts
 );
 
 
