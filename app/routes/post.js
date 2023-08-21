@@ -18,6 +18,8 @@ import getPostsForFeed from "../controllers/posts/getPostsForFeed.js";
 import getPostsForExplore from "../controllers/posts/getPostsForExplore.js";
 import validateGetUserPost from "../controllers/posts/validators/validateGetUserPosts.js";
 import getUserPosts from "../controllers/posts/getUserPosts.js";
+import validateGetPostById from "../controllers/posts/validators/validateGetPostById.js";
+import getPostById from "../controllers/posts/getPostById.js";
 
 const PostRouter = express.Router();
 
@@ -54,6 +56,11 @@ PostRouter.delete("/:postId",
     checkUserPresent,
     verifyUserForPost,
     deletePost
+);
+
+PostRouter.get("/:postId",
+    validateGetPostById,
+    getPostById
 );
 
 
