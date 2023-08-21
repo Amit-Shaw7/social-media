@@ -32,6 +32,13 @@ UserRouter.get("/profile",
     getProfile
 );
 
+UserRouter.patch("/profile",
+    validateUpdateProfile,
+    isLoggedIn,
+    checkUserPresent,
+    updateProfile
+);
+
 UserRouter.get("/suggesteduser",
     isLoggedIn,
     checkUserPresent,
@@ -43,14 +50,6 @@ UserRouter.get("/:id",
     isLoggedIn,
     checkUserPresent,
     getUser
-);
-
-UserRouter.patch("/:id",
-    validateUpdateProfile,
-    isLoggedIn,
-    checkUserPresent,
-    verifyUserForProfile,
-    updateProfile
 );
 
 UserRouter.get("/followers/:id",

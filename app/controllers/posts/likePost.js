@@ -27,6 +27,7 @@ const likePost = asyncError(async (req, res, next) => {
 
     return res.status(200).json({
         msg: liked ? "POST_LIKED_SUCCESFULLY" : "POST_REMOVED_FROM_LIKES",
+        liked
     })
 })
 export default likePost;

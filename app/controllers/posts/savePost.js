@@ -27,6 +27,7 @@ const savePost = asyncError(async (req, res, next) => {
 
     return res.status(200).json({
         msg: saved ? "POST_SAVED_SUCCESFULLY" : "POST_UNSAVED_SUCCESFULLY",
+        saved
     })
 })
 export default savePost;

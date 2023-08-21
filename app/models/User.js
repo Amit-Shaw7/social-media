@@ -24,6 +24,12 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    bio: {
+        type: String,
+    },
+    website: {
+        type: String,
+    },
     role: {
         type: String,
         enum: {
