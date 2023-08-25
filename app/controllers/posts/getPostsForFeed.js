@@ -9,22 +9,16 @@ const getPostsForFeed = asyncError(async (req, res, next) => {
     const user = req.user;
     let posts = [];
 
+
+    user.followings.push(user._id);
+
     if (query === "trending") {
         posts = await Post.find({ user: { $in: user.followings } }).sort({ likes: 1 }).populate("user");
     } else if (query === "oldest") {
         posts = await Post.find({ user: { $in: user.followings } }).sort({ createdAt: 1 }).populate("user");
     } else if (query === "latest") {
         posts = await Post.find({ user: { $in: user.followings } }).sort({ createdAt: -1 }).populate("user");
-    } else {
-        return res.status(200).json({
-            msg: "FEED_FETCHED_SUCCESFULLY",
-            posts: []
-        });
     }
-
-    const post = await Post.find({ user: user._id });
-
-    posts = [...posts, ...post];
 
     return res.status(200).json({
         msg: "FEED_FETCHED_SUCCESFULLY",

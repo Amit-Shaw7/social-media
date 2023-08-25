@@ -39,6 +39,7 @@ PostRouter.get("/feed",
 PostRouter.post("/",
     validateCreatePost,
     isLoggedIn,
+    checkUserPresent,
     createPost
 );
 
