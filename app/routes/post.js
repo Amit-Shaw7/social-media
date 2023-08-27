@@ -20,6 +20,7 @@ import validateGetUserPost from "../controllers/posts/validators/validateGetUser
 import getUserPosts from "../controllers/posts/getUserPosts.js";
 import validateGetPostById from "../controllers/posts/validators/validateGetPostById.js";
 import getPostById from "../controllers/posts/getPostById.js";
+import getMyPosts from "../controllers/posts/getMyPosts.js";
 
 const PostRouter = express.Router();
 
@@ -42,6 +43,11 @@ PostRouter.post("/",
     checkUserPresent,
     createPost
 );
+PostRouter.get("/myposts",
+    isLoggedIn,
+    checkUserPresent,
+    getMyPosts
+);
 
 PostRouter.patch("/:postId",
     validateUpdatePost,
@@ -59,10 +65,6 @@ PostRouter.delete("/:postId",
     deletePost
 );
 
-PostRouter.get("/:postId",
-    validateGetPostById,
-    getPostById
-);
 
 
 PostRouter.patch("/like/:postId",
@@ -86,6 +88,7 @@ PostRouter.patch("/save/:postId",
 
 PostRouter.get("/likedposts",
     isLoggedIn,
+    checkUserPresent,
     getAllLikedPosts
 );
 
@@ -98,6 +101,10 @@ PostRouter.get("/all/:id",  // userId
     isLoggedIn,
     validateGetUserPost,
     getUserPosts
+);
+PostRouter.get("/:postId",
+    validateGetPostById,
+    getPostById
 );
 
 

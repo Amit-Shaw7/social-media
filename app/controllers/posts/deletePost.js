@@ -11,6 +11,7 @@ const deletePost = asyncError(async (req, res, next) => {
         return next(new ErrorHandler("POST_NOT_FOUND", 404));
     }
     user.posts = user.posts.filter(id => id.equals(deletedPost._id));
+    await user.save();
     return res.status(200).json({
         msg: "POST_DELETED_SUCCESFULLY",
         post: deletedPost

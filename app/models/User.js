@@ -6,6 +6,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         requierd: [true, "Name is required feild"],
     },
+    cover : {
+        type : String,
+    },
+    avatar : {
+        type : String,
+    },
     email: {
         type: String,
         required: [true, "Email is required feild"],

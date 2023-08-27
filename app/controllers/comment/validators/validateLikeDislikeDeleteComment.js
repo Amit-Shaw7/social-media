@@ -6,7 +6,7 @@ import validateResult from "../../../middleware/validation/validateResult.js";
  * Validates like dislike comment request
  */
 
-const validateLikeDislikeComment = [
+const validateLikeDislikeDeleteComment = [
     check('id') // comment id id
         .exists()
         .withMessage('MISSING')
@@ -19,4 +19,4 @@ const validateLikeDislikeComment = [
     }
 ]
 
-export default validateLikeDislikeComment;
+export default validateLikeDislikeDeleteComment;
